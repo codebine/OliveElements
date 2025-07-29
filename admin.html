@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Admin - Manage Listings</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+
+    <!-- Favicon -->
+    <link href="img/logo.png" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <style>
+        /* Custom styles for the admin page */
+        .card-img-top {
+            width: 100%;
+            height: 200px; /* Fixed height for image previews */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+        }
+
+        .badge-instant {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffc107; /* Bootstrap warning yellow */
+            color: #212529; /* Dark text */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .listing-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .listing-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .listing-details {
+            flex-grow: 1;
+        }
+
+        .listing-details h6 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .listing-details p {
+            margin-bottom: 0;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .listing-actions {
+            margin-left: 20px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading...</p>
+    </div>
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 wow fadeIn"
+        data-wow-delay="0.1s">
+        <a href="index.html" class="navbar-brand p-0">
+            <img class="img-fluid me-3" src="img/logo.png" alt="Icon" />
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href="explore.html" class="nav-item nav-link">Explore</a>
+                <a href="service.html" class="nav-item nav-link">Services</a>
+                <a href="blog.html" class="nav-item nav-link">Blog</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="admin.html" class="nav-item nav-link active">Admin</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="container py-5">
+        <h2 class="mb-4 text-primary">Admin Panel - Manage Listings</h2>
+
+        <!-- Add New Listing Form -->
+        <div class="card mb-5 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="card-header bg-primary text-white">
+                <h4>Add New Listing</h4>
+            </div>
+            <div class="card-body">
+                <form id="addListingForm">
+                    <div class="mb-3">
+                        <label for="imageUrl" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="imageUrl"
+                            placeholder="e.g., https://placehold.co/600x400/000000/FFFFFF?text=New+Listing" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="recommendation" class="form-label">Recommendation %</label>
+                            <input type="number" class="form-control" id="recommendation" min="0" max="100" value="100"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="reviews" class="form-label">Number of Reviews</label>
+                            <input type="number" class="form-control" id="reviews" min="0" value="0" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="e.g., Cozy Forest Cabin"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location"
+                            placeholder="e.g., Bannerghatta, near Bangalore" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label">Price (₹)</label>
+                            <input type="number" class="form-control" id="price" min="0" value="0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="unit" class="form-label">Unit Type</label>
+                            <input type="text" class="form-control" id="unit" placeholder="e.g., / unit or / adult"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="instantBook">
+                        <label class="form-check-label" for="instantBook">
+                            Instant Book
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Add Listing</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Existing Listings Section -->
+        <div class="wow fadeInUp" data-wow-delay="0.5s">
+            <h4 class="mb-3 text-primary">Existing Listings</h4>
+            <div id="listingsContainer">
+                <!-- Listings will be loaded here by JavaScript -->
+                <p class="text-center text-muted" id="noListingsMessage">No listings found. Add one above!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <img class="logo" src="img/logo.png" alt="Icon" />
+                    <p class="text-light my-4">Olive Elements Pvt Ltd</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <p class="mb-2">
+                        <i class="fa fa-map-marker-alt me-3"></i>Corporate Office : Silicon Park, PLOT NO 23-24, 4th
+                        floor, VIP
+                        Hills, Madhapur, Hyderabad, Telangana, INDIA, Pin Code - 500081.
+                    </p>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <p class="mb-2">
+                        <i class="fa fa-phone-alt me-3"></i>+91 99518 44668
+                    </p>
+                    <p class="mb-2">
+                        <i class="fa fa-envelope me-3"></i>info@oliveelements.com
+                    </p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">oliveelements</a>, All
+                        Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app;
+        let db;
+        let auth;
+        let userId = null;
+        let isAuthReady = false;
+
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        /**
+         * Shows the loading overlay.
+         */
+        function showLoading() {
+            loadingOverlay.classList.remove('d-none');
+        }
+
+        /**
+         * Hides the loading overlay.
+         */
+        function hideLoading() {
+            loadingOverlay.classList.add('d-none');
+        }
+
+        /**
+         * Initializes Firebase and sets up authentication.
+         * This function should be called once the DOM is ready.
+         */
+        async function initializeFirebase() {
+            showLoading();
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Authenticate user using the provided token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Listen for auth state changes to set userId and indicate auth readiness
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("User ID:", userId);
+                    } else {
+                        userId = null;
+                        console.log("No user signed in.");
+                    }
+                    isAuthReady = true; // Auth state has been checked
+                    hideLoading(); // Hide loading once auth is ready
+                    setupRealtimeListener(); // Set up listener after auth is ready
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                // Display error message to user if initialization fails
+                alert("Failed to initialize Firebase. Please check your console for details.");
+                hideLoading();
+            }
+        }
+
+        /**
+         * Sets up a real-time listener for listings from Firestore.
+         * This function should only be called after Firebase authentication is ready.
+         */
+        function setupRealtimeListener() {
+            if (!isAuthReady || !userId) {
+                console.log("Firebase not ready or user not authenticated for real-time listener.");
+                return;
+            }
+
+            const listingsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/listings`);
+            const q = query(listingsCollectionRef);
+
+            onSnapshot(q, (snapshot) => {
+                const listings = [];
+                snapshot.forEach((doc) => {
+                    listings.push({ id: doc.id, ...doc.data() });
+                });
+                renderListings(listings);
+            }, (error) => {
+                console.error("Error fetching listings:", error);
+                // Display error message to user
+                alert("Failed to load listings. Please try again later.");
+            });
+        }
+
+        /**
+         * Renders the list of listings on the admin page.
+         * @param {Array<Object>} listings - An array of listing objects.
+         */
+        function renderListings(listings) {
+            const listingsContainer = document.getElementById('listingsContainer');
+            listingsContainer.innerHTML = ''; // Clear existing listings
+            const noListingsMessage = document.getElementById('noListingsMessage');
+
+            if (listings.length === 0) {
+                noListingsMessage.classList.remove('d-none');
+                listingsContainer.appendChild(noListingsMessage); // Re-add if it was removed
+            } else {
+                noListingsMessage.classList.add('d-none'); // Hide message if listings exist
+                listings.forEach(listing => {
+                    const listingElement = document.createElement('div');
+                    listingElement.className = 'listing-item';
+                    listingElement.innerHTML = `
+                        <img src="${listing.imageUrl || 'https://placehold.co/80x80/cccccc/000000?text=No+Image'}" alt="${listing.title}">
+                        <div class="listing-details">
+                            <h6>${listing.title}</h6>
+                            <p>${listing.location}</p>
+                            <p><strong>₹${listing.price} ${listing.unit}</strong> • ${listing.recommendation}% recommend • ${listing.reviews} reviews</p>
+                            ${listing.instantBook ? '<span class="badge bg-success">Instant Book</span>' : ''}
+                        </div>
+                        <div class="listing-actions">
+                            <button class="btn btn-danger btn-sm delete-btn" data-id="${listing.id}">Delete</button>
+                        </div>
+                    `;
+                    listingsContainer.appendChild(listingElement);
+                });
+
+                // Add event listeners to delete buttons
+                listingsContainer.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const listingId = event.target.dataset.id;
+                        if (confirm("Are you sure you want to delete this listing?")) {
+                            deleteListing(listingId);
+                        }
+                    });
+                });
+            }
+        }
+
+        /**
+         * Adds a new listing to Firestore.
+         * @param {Object} listingData - The data for the new listing.
+         */
+        async function addListing(listingData) {
+            if (!userId) {
+                alert("Authentication not ready. Please wait a moment and try again.");
+                return;
+            }
+            showLoading();
+            try {
+                const listingsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/listings`);
+                await addDoc(listingsCollectionRef, listingData);
+                alert("Listing added successfully!");
+                document.getElementById('addListingForm').reset(); // Clear form
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert("Error adding listing. Please try again.");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        /**
+         * Deletes a listing from Firestore.
+         * @param {string} id - The ID of the listing to delete.
+         */
+        async function deleteListing(id) {
+            if (!userId) {
+                alert("Authentication not ready. Please wait a moment and try again.");
+                return;
+            }
+            showLoading();
+            try {
+                const listingDocRef = doc(db, `artifacts/${appId}/users/${userId}/listings`, id);
+                await deleteDoc(listingDocRef);
+                alert("Listing deleted successfully!");
+            } catch (e) {
+                console.error("Error deleting document: ", e);
+                alert("Error deleting listing. Please try again.");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Event listener for the Add Listing form submission
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFirebase(); // Initialize Firebase when DOM is ready
+
+            const addListingForm = document.getElementById('addListingForm');
+            if (addListingForm) {
+                addListingForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const imageUrl = document.getElementById('imageUrl').value;
+                    const recommendation = parseInt(document.getElementById('recommendation').value);
+                    const reviews = parseInt(document.getElementById('reviews').value);
+                    const title = document.getElementById('title').value;
+                    const location = document.getElementById('location').value;
+                    const price = parseFloat(document.getElementById('price').value);
+                    const unit = document.getElementById('unit').value;
+                    const instantBook = document.getElementById('instantBook').checked;
+
+                    const newListing = {
+                        imageUrl,
+                        recommendation,
+                        reviews,
+                        title,
+                        location,
+                        price,
+                        unit,
+                        instantBook,
+                        createdAt: new Date() // Add a timestamp
+                    };
+
+                    addListing(newListing);
+                });
+            }
+        });
+
+        // Placeholder for `confirm` replacement. In a real app, this would be a custom modal.
+        function confirm(message) {
+            return window.confirm(message); // Using window.confirm for now as a placeholder
+        }
+
+        // Placeholder for `alert` replacement. In a real app, this would be a custom modal.
+        function alert(message) {
+            window.alert(message); // Using window.alert for now as a placeholder
+        }
+    </script>
+</body>
+
+</html>
