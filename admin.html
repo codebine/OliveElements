@@ -41,16 +41,48 @@
           <input type="text" class="form-control" id="location" required />
         </div>
         <div class="col-md-4">
-          <label class="form-label">Price</label>
+          <label class="form-label">Accommodation Type</label>
+          <input type="text" class="form-control" id="type" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Price (per unit)</label>
           <input type="text" class="form-control" id="price" required />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <label class="form-label">Availability</label>
+          <input type="text" class="form-control" id="availability" value="Available for booking" />
+        </div>
+        <div class="col-md-4">
           <label class="form-label">Image URL</label>
           <input type="url" class="form-control" id="image" required />
         </div>
         <div class="col-md-6">
           <label class="form-label">Review Text</label>
           <input type="text" class="form-control" id="review" required />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Check-in Time</label>
+          <input type="text" class="form-control" id="checkin" placeholder="1:00 pm" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Check-out Time</label>
+          <input type="text" class="form-control" id="checkout" placeholder="11:00 am" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Accessibility</label>
+          <input type="text" class="form-control" id="accessibility" placeholder="e.g., Road" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Amenities (comma-separated)</label>
+          <input type="text" class="form-control" id="amenities" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Food & Beverages (comma-separated)</label>
+          <input type="text" class="form-control" id="food" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Activities (comma-separated)</label>
+          <input type="text" class="form-control" id="activities" />
         </div>
         <div class="col-12">
           <button type="submit" class="btn btn-primary">Add Card</button>
@@ -83,42 +115,48 @@
     const cardForm = document.getElementById("cardForm");
     const cardTableBody = document.getElementById("cardTableBody");
 
-    // Load cards from localStorage
     let cardList = JSON.parse(localStorage.getItem("cards")) || [];
 
-    // Render existing cards on page load
     renderTable();
 
-    // Add new card
     cardForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const title = document.getElementById("title").value;
-      const location = document.getElementById("location").value;
-      const price = document.getElementById("price").value;
-      const image = document.getElementById("image").value;
-      const review = document.getElementById("review").value;
+      const title = document.getElementById("title").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const image = document.getElementById("image").value.trim();
+      const review = document.getElementById("review").value.trim();
 
-      const card = { title, location, price, image, review };
+      const card = {
+        title,
+        location,
+        price,
+        image,
+        review,
+        type: document.getElementById("type").value.trim(),
+        availability: document.getElementById("availability").value.trim(),
+        checkin: document.getElementById("checkin").value.trim(),
+        checkout: document.getElementById("checkout").value.trim(),
+        accessibility: document.getElementById("accessibility").value.trim(),
+        amenities: document.getElementById("amenities").value.split(",").map(s => s.trim()),
+        food: document.getElementById("food").value.split(",").map(s => s.trim()),
+        activities: document.getElementById("activities").value.split(",").map(s => s.trim()),
+        description: "The Little Black Cabins: A Cozy Escape in Nature 🌿✨",
+        gallery: [
+          "img/img-1/fc1.jpg",
+          "img/img-1/fire.jpg",
+          "img/img-1/jc2.jpg",
+          "img/img-1/jc7.jpg"
+        ]
+      };
+
       cardList.push(card);
-
-      // Save to localStorage
       localStorage.setItem("cards", JSON.stringify(cardList));
-
       renderTable();
       cardForm.reset();
     });
 
-    // Delete card
-    function deleteCard(index) {
-      if (confirm("Are you sure you want to delete this card?")) {
-        cardList.splice(index, 1);
-        localStorage.setItem("cards", JSON.stringify(cardList));
-        renderTable();
-      }
-    }
-
-    // Render all cards in table
     function renderTable() {
       cardTableBody.innerHTML = "";
       cardList.forEach((card, index) => {
@@ -129,11 +167,21 @@
           <td>${card.location}</td>
           <td>${card.price}</td>
           <td>${card.review}</td>
-          <td><img src="${card.image}" alt="thumb" class="img-fluid thumb" /></td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteCard(${index})">Delete</button></td>
+          <td><img src="${card.image}" alt="thumb" class="thumb" /></td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteCard(${index})">Delete</button>
+          </td>
         `;
         cardTableBody.appendChild(row);
       });
+    }
+
+    function deleteCard(index) {
+      if (confirm("Are you sure you want to delete this card?")) {
+        cardList.splice(index, 1);
+        localStorage.setItem("cards", JSON.stringify(cardList));
+        renderTable();
+      }
     }
   </script>
 </body>
