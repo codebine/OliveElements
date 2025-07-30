@@ -128,29 +128,36 @@
     </div>
 
     <!-- Booking Box -->
-    <div class="col-lg-4">
-      <div class="listing-price-box">
-        <h4>₹8,500 <small class="text-muted">/ unit</small></h4>
-        <p class="text-muted small">Minimum nights: 1</p>
-        <form>
-          <div class="mb-2">
-            <label class="form-label">Guests</label>
-            <input type="number" class="form-control" placeholder="Add guests">
-          </div>
-          <div class="row g-2">
-            <div class="col">
-              <label class="form-label">Check in</label>
-              <input type="date" class="form-control">
-            </div>
-            <div class="col">
-              <label class="form-label">Check out</label>
-              <input type="date" class="form-control">
-            </div>
-          </div>
-          <button class="btn btn-secondary w-100 mt-3">Proceed to review</button>
-        </form>
-      </div>
+   <div class="col-lg-4">
+  <div class="listing-price-box">
+    <h4>₹8,500 <small class="text-muted">/ unit</small></h4>
+    <p class="text-muted small">Minimum nights: 1</p>
+
+    <!-- Replace form with static info -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Location</label>
+      <p class="form-control-plaintext">Bannerghatta, near Bangalore</p>
     </div>
+    <div class="mb-3">
+      <label class="form-label fw-bold">Accommodation Type</label>
+      <p class="form-control-plaintext">Little Black Cabins</p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-bold">Availability</label>
+      <p class="form-control-plaintext">Available for booking</p>
+    </div>
+
+    <!-- Proceed button with WhatsApp and call integration -->
+    <div class="d-grid gap-2 mt-3">
+      <a href="tel:+919951844668" class="btn btn-secondary">Call to Book</a>
+      <a href="https://wa.me/919951844668?text=Hi%20I%20am%20interested%20in%20booking%20Little%20Black%20Cabins"
+        class="btn btn-success" target="_blank">
+        WhatsApp to Book
+      </a>
+    </div>
+  </div>
+</div>
+
   </div>
 </div>
 
@@ -214,6 +221,8 @@
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
+
+  
 </body>
 
 </html>
