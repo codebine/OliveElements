@@ -1,0 +1,42 @@
+ body { font-family: 'Open Sans', sans-serif; background:#f9fafb; color:#2c3e50;}
+    .navbar { box-shadow: 0 2px 24px rgba(33,82,61,.07);}
+    .navbar-brand { font-family:'Quicksand',sans-serif; font-weight:700; color:#21523d; letter-spacing:1px;}
+    .header-bg {
+      background: linear-gradient(rgba(40,60,52,0.7), rgba(49,131,102,0.5)), url('img/services-hero.jpg') center center/cover no-repeat;
+      border-bottom-left-radius: 32px; border-bottom-right-radius: 32px;
+    }
+    .header-bg h1 { font-family:'Quicksand',sans-serif; font-weight:700; letter-spacing:2px; }
+    .service-block {
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(44,62,80,0.13);
+      border-radius: 18px;
+      margin-bottom: 36px;
+      overflow: hidden;
+      transition:transform 0.15s,box-shadow 0.15s;
+      display:flex; flex-wrap:wrap;
+    }
+    .service-block:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 20px 48px rgba(44,92,80,0.18);
+    }
+    .service-img {width:100%; height:340px; object-fit:cover; display:block;}
+    .service-info {padding:2em 2.5em; display:flex; flex-direction:column; justify-content:center;}
+    .service-info h2, .service-info h3 {font-family: 'Quicksand',sans-serif; font-weight:700; color:#21523d;}
+    .service-info .btn { background:#237361; color:#fff; border-radius:8px; font-weight:700;}
+    .service-info .btn:hover { background:#4cb87d;}
+    .service-features {display:flex;flex-wrap:wrap;gap:14px;margin:48px 0 40px 0;}
+    .single-feature {flex:1 1 220px; background:#e8f6ef; border-radius:13px; padding:26px;text-align:center; min-width:200px;}
+    .single-feature i {font-size:2.1em;color:#237361;margin-bottom:11px;}
+    .single-feature h5 { font-family:'Quicksand',sans-serif; font-weight:600;margin-bottom:10px;color:#2c3e50;}
+    @media (max-width:991px){
+      .service-block {flex-direction:column;}
+      .service-img {height:220px;}
+      .service-info {padding:21px 14px;}
+      .service-features {gap:8px;}
+      .single-feature {padding:14px; min-width:0;}
+    }
+    .footer { background:#232529; color:#ccc; border-top:3px solid #237361; padding:45px 0;}
+    .footer .logo { width:110px; margin-bottom:10px;}
+    .btn-social { color:#fff; border-radius:50%; border:1px solid #4cb87d; background:#237361; margin-right:8px;}
+    .btn-social:hover { background:#4cb87d; }
+    .back-to-top { position:fixed; bottom:32px; right:32px; z-index:999; }

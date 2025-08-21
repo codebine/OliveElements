@@ -1,0 +1,129 @@
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #f9fafb;
+      color: #2c3e50;
+    }
+
+    .navbar {
+      box-shadow: 0 2px 24px rgba(33, 82, 61, 0.07);
+    }
+
+    .navbar-brand {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      color: #21523d;
+      letter-spacing: 1px;
+    }
+
+    .header-bg {
+      background: linear-gradient(rgba(28, 40, 52, 0.7), rgba(39, 91, 73, 0.5)),
+        url('img/blog-hero.jpg') center center/cover no-repeat;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      padding: 5rem 0 3rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .header-bg h1 {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    .header-bg p,
+    .breadcrumb a {
+      color: #ddd;
+    }
+
+    .breadcrumb .active {
+      color: #4cb87d;
+    }
+
+    .card-blog {
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(44, 62, 80, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-blog:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(44, 92, 80, 0.16);
+    }
+
+    .card-blog .card-img-top {
+      border-radius: 18px 18px 0 0;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-blog .card-title {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      color: #21523d;
+      margin-bottom: 0.7rem;
+    }
+
+    .card-blog .card-text {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      min-height: 75px; /* keep cards uniform */
+    }
+
+    .btn-outline-primary {
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #237361;
+      color: white;
+      border-color: #237361;
+    }
+
+    .footer {
+      background: #232529;
+      color: #ccc;
+      border-top: 3px solid #237361;
+      padding: 45px 0;
+    }
+
+    .footer .logo {
+      width: 110px;
+      margin-bottom: 10px;
+    }
+
+    .btn-social {
+      color: #fff;
+      border-radius: 50%;
+      border: 1px solid #4cb87d;
+      background: #237361;
+      margin-right: 8px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-social:hover {
+      background: #4cb87d;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 999;
+    }
+
+    @media (max-width: 768px) {
+      .card-blog .card-img-top {
+        height: 150px;
+      }
+    }

@@ -1,148 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <title>Explore - Olive Elements</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <meta content="" name="keywords" />
-  <meta content="" name="description" />
-
   <link href="img/logo.png" rel="icon" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap" rel="stylesheet" />
-
+  <!-- Bootstrap & Font Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="lib/animate/animate.min.css" rel="stylesheet" />
-  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+<!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet" />
+  <link href="css/explore.css" rel="stylesheet" />
+  <link href="css/home.css" rel="stylesheet" />
 </head>
-
 <body>
-  <!-- Navbar Start -->
-  <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-    <a href="index.html" class="navbar-brand p-0">
-      <img class="img-fluid me-3" src="img/logo.png" alt="Icon" />
-    </a>
-    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
-      <div class="navbar-nav ms-auto">
-        <a href="explore.html" class="nav-item nav-link active">Explore</a>
-        <a href="service.html" class="nav-item nav-link">Services</a>
-        <a href="blog.html" class="nav-item nav-link">Blog</a>
-        <a href="about.html" class="nav-item nav-link">About</a>
-        <a href="contact.html" class="nav-item nav-link">Contact</a>
-      </div>
-    </div>
-  </nav>
-  <!-- Navbar End -->
 
-  <!-- Page Header Start -->
-  <div class="container-fluid header-bg py-5 mb-5">
-    <div class="container py-5">
-      <h1 class="display-4 text-white mb-3">Explore</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
-          <li class="breadcrumb-item text-primary active" aria-current="page">Explore</li>
-        </ol>
-      </nav>
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 shadow-sm">
+  <a href="index.html" class="navbar-brand p-0">
+    <img class="img-fluid me-3" src="img/logo.png" alt="Olive Elements Logo" width="52" />
+    <span class="fw-bold" style="color:#21523d;">Olive Elements</span>
+  </a>
+  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
+    <div class="navbar-nav ms-auto">
+      <a href="explore.html" class="nav-item nav-link active">Explore</a>
+      <a href="service.html" class="nav-item nav-link">Services</a>
+      <a href="blog.html" class="nav-item nav-link">Blog</a>
+      <a href="about.html" class="nav-item nav-link">About</a>
+      
     </div>
   </div>
-  <!-- Page Header End -->
+</nav>
+<!-- Navbar End -->
 
-  <div class="container py-4">
-    <div class="row g-4" id="cardContainer">
-      <!-- Dynamic cards from localStorage will be inserted here -->
-    </div>
-  </div>
+<!-- Hero Section Start -->
+<section class="hero-section text-center d-flex flex-column justify-content-center align-items-center">
+  <h1 class="display-4 text-white mb-3">Explore the Outdoors</h1>
+  <p class="lead text-light mb-4">Find and book memorable eco-stays, campsites, glamping & unique nature getaways.</p>
+</section>
+<!-- Hero Section End -->
 
-  <!-- Footer Start -->
-  <div class="container-fluid footer bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container py-5">
-      <div class="row g-5">
-        <div class="col-lg-4 col-md-6">
-          <img class="logo" src="img/logo.png" alt="Icon" />
-          <p class="text-light my-4">Olive Elements Pvt Ltd</p>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Corporate Office: Silicon Park, PLOT NO 23‑24, 4th Floor, VIP Hills, Madhapur, Hyderabad, Telangana, INDIA, 500081.</p>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 99518 44668</p>
-          <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@oliveelements.com</p>
-          <div class="d-flex pt-2">
-            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
-            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
-            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
-            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
+
+<!-- Card Grid Start -->
+<div class="container py-4">
+  <h2 class="section-title">Trending Retreats & Camps</h2>
+  <div class="row g-4" id="cardContainer">
+    <!-- Dynamic cards will be inserted here by JS. Example static card below: -->
+    <!--
+    <div class="col-lg-4 col-md-6">
+      <div class="card position-relative h-100">
+        <span class="badge-featured">Featured</span>
+        <a href="product.html?id=0">
+          <img src="img/sample-camp1.jpg" class="card-img-top" alt="Camp Title">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title mb-2">Serene Hills Retreat</h5>
+          <p class="text-muted">📍 Coorg, Karnataka</p>
+          <p class="mb-1">"Breathtaking sunrise views on a mountain perch."</p>
+          <strong class="d-block mb-2">₹4,000 / night</strong>
+          <a href="product.html?id=0" class="btn btn-book w-100">Book Now</a>
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="copyright">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="border-bottom" href="#">oliveelements</a>, All Rights Reserved.
-          </div>
+    -->
+  </div>
+</div>
+<!-- Card Grid End -->
+
+<!-- Inspiration Section -->
+<div class="container py-5 mt-4" style="background:#e5f3ef;border-radius:24px;">
+  <h2 class="section-title">Discover Calm-cation Destinations</h2>
+  <div class="row g-4" id="inspireContainer">
+    <!-- Insert curated calmcation cards here in similar card format -->
+  </div>
+</div>
+
+<!-- Footer Start -->
+<footer class="footer mt-5">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-4 col-md-6">
+        <img class="logo" src="img/logo.png" alt="Olive Elements Logo" />
+        <p>Olive Elements Pvt Ltd</p>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>
+          Corporate Office: Silicon Park, PLOT NO 23‑24, 4th Floor, VIP Hills, Madhapur, Hyderabad, Telangana, INDIA, 500081.
+        </p>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 99518 44668</p>
+        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@oliveelements.com</p>
+        <div class="d-flex pt-2">
+          <a class="btn btn-social" href="#"><i class="fab fa-twitter"></i></a>
+          <a class="btn btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+          <a class="btn btn-social" href="#"><i class="fab fa-youtube"></i></a>
+          <a class="btn btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
       </div>
     </div>
+    <div class="text-center mt-4">
+      <small>&copy; oliveelements, All Rights Reserved.</small>
+    </div>
   </div>
-  <!-- Footer End -->
+</footer>
+<!-- Footer End -->
 
-  <!-- Back to Top -->
-  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+<!-- Floating Back-to-Top Button -->
+<a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top" style="position: fixed; bottom: 32px; right: 32px; z-index:999;"><i class="bi bi-arrow-up"></i></a>
 
-  <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/waypoints/waypoints.min.js"></script>
-  <script src="lib/counterup/counterup.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
-  <script src="js/main.js"></script>
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Load dynamic cards from localStorage -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const cards = JSON.parse(localStorage.getItem("cards") || "[]");
-      const cardContainer = document.getElementById("cardContainer");
-
-      if (!cards.length) {
-        cardContainer.innerHTML = "<p class='text-muted'>No cards found. Please add from the admin panel.</p>";
-        return;
-      }
-
-      cards.forEach((card, index) => {
-        const col = document.createElement("div");
-        col.className = "col-md-4";
-        col.innerHTML = `
-          <div class="card position-relative h-100">
-            <a href="product.html?id=${index}">
-              <img src="${card.image}" class="card-img-top" alt="${card.title}">
-            </a>
-            <div class="card-body">
-              <p class="text-primary mb-1">${card.review || ""}</p>
-              <h5 class="card-title">${card.title}</h5>
-              <p class="text-muted mb-2">📍 ${card.location}</p>
-              <strong>${card.price}</strong>
-            </div>
+<!-- Dynamic Card Injection Example -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Example dynamic: Use your own data or integrate backend as needed.
+    const cards = JSON.parse(localStorage.getItem("cards") || "[]");
+    const cardContainer = document.getElementById("cardContainer");
+    if (!cards.length) {
+      cardContainer.innerHTML = "<p class='text-muted'>No getaways yet—please add some from the admin panel!</p>";
+      return;
+    }
+    cards.forEach((card, index) => {
+      const col = document.createElement("div");
+      col.className = "col-lg-4 col-md-6";
+      col.innerHTML = `
+        <div class="card position-relative h-100">
+          ${card.featured ? '<span class="badge-featured">Featured</span>' : ''}
+          <a href="product.html?id=${index}">
+            <img src="${card.image}" class="card-img-top" alt="${card.title}">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title mb-2">${card.title}</h5>
+            <p class="text-muted">📍 ${card.location}</p>
+            <p class="mb-1">${card.review || ""}</p>
+            <strong class="d-block mb-2">${card.price}</strong>
+            <a href="product.html?id=${index}" class="btn btn-book w-100">Book Now</a>
           </div>
-        `;
-        cardContainer.appendChild(col);
-      });
+        </div>
+      `;
+      cardContainer.appendChild(col);
     });
-  </script>
+  });
+</script>
 </body>
-
 </html>
