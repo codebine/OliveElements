@@ -761,3 +761,32 @@
       font-weight: bold;
     }
 /* Services */
+/* Modal  */
+#adModal .ad-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+  }
+  #adModal .ad-card:hover {
+    transform: scale(1.02);
+  }
+  #adModal .ad-card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+  #adModal .ad-card-body {
+    padding: 1rem;
+    background: #fff;
+  }
+  #adModal .ad-card-body h5 {
+    margin: 0 0 0.5rem;
+    font-weight: bold;
+  }
+  #adModal .ad-card-body p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+/* Modal  */

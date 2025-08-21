@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Olive Elements</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Template Stylesheet -->
+  <link href="css/admin.css" rel="stylesheet" />
+    <style>
+    img.thumb {
+      width: 80px;
+      height: auto;
+    }
+
+    .form-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .table td img {
+      max-width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d-flex">
+
+    <!-- Sidebar -->
+    <aside class="sidebar p-4 d-flex flex-column">
+      <div class="d-flex align-items-center mb-4">
+        <img src="img/logo.png" class="me-2" width="40" alt="Logo">
+        <h5 class="m-0">Olive Elements</h5>
+      </div>
+      <nav class="nav flex-column mb-4">
+        <a class="nav-link " href="admin.html">Dashboard</a>
+        <a class="nav-link active" href="events_admin.html">Campsites</a>
+        <a class="nav-link" href="admin_ads.html">Advertisement</a>
+        <a class="nav-link" href="blog_admin.html">Blogs</a>
+      </nav>
+      <div class="pt-4">
+        <a href="index.html" class="d-block text-light">Log Out</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 p-4">
+ <div class="container py-5">
+    <h2 class="mb-4">Admin Panel - Manage Cards</h2>
+
+    <!-- Add Card Form -->
+    <div class="form-section mb-5">
+      <h4>Add New Card</h4>
+      <form id="cardForm" class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" id="location" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Accommodation Type</label>
+          <input type="text" class="form-control" id="type" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Price (per unit)</label>
+          <input type="text" class="form-control" id="price" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Availability</label>
+          <input type="text" class="form-control" id="availability" value="Available for booking" />
+        </div>
+
+        <!-- Image Input: URL + File Upload -->
+        <div class="col-md-4">
+          <label class="form-label">Image URL</label>
+          <input type="url" class="form-control" id="image" placeholder="Enter image URL" />
+          <small class="text-muted">OR</small>
+          <input type="file" class="form-control mt-2" id="imageUpload" accept="image/*" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Review Text</label>
+          <input type="text" class="form-control" id="review" required />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Check-in Time</label>
+          <input type="text" class="form-control" id="checkin" placeholder="1:00 pm" />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Check-out Time</label>
+          <input type="text" class="form-control" id="checkout" placeholder="11:00 am" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Accessibility</label>
+          <input type="text" class="form-control" id="accessibility" placeholder="e.g., Road" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Amenities (comma-separated)</label>
+          <input type="text" class="form-control" id="amenities" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Food & Beverages (comma-separated)</label>
+          <input type="text" class="form-control" id="food" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Activities (comma-separated)</label>
+          <input type="text" class="form-control" id="activities" />
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Add Card</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Card List Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Review</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="cardTableBody">
+          <!-- Dynamic Rows Here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const cardForm = document.getElementById("cardForm");
+    const cardTableBody = document.getElementById("cardTableBody");
+
+    let cardList = JSON.parse(localStorage.getItem("cards")) || [];
+
+    renderTable();
+
+    // Handle File Upload (convert to base64)
+    document.getElementById("imageUpload").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          document.getElementById("image").value = event.target.result; // Store base64 in URL input
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    cardForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const image = document.getElementById("image").value.trim();
+      const review = document.getElementById("review").value.trim();
+
+      const card = {
+        title,
+        location,
+        price,
+        image,
+        review,
+        type: document.getElementById("type").value.trim(),
+        availability: document.getElementById("availability").value.trim(),
+        checkin: document.getElementById("checkin").value.trim(),
+        checkout: document.getElementById("checkout").value.trim(),
+        accessibility: document.getElementById("accessibility").value.trim(),
+        amenities: document.getElementById("amenities").value.split(",").map(s => s.trim()),
+        food: document.getElementById("food").value.split(",").map(s => s.trim()),
+        activities: document.getElementById("activities").value.split(",").map(s => s.trim()),
+        description: "The Little Black Cabins: A Cozy Escape in Nature 🌿✨",
+        gallery: [
+          "img/img-1/fc1.jpg",
+          "img/img-1/fire.jpg",
+          "img/img-1/jc2.jpg",
+          "img/img-1/jc7.jpg"
+        ]
+      };
+
+      cardList.push(card);
+      localStorage.setItem("cards", JSON.stringify(cardList));
+      renderTable();
+      cardForm.reset();
+    });
+
+    function renderTable() {
+      cardTableBody.innerHTML = "";
+      cardList.forEach((card, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${card.title}</td>
+          <td>${card.location}</td>
+          <td>${card.price}</td>
+          <td>${card.review}</td>
+          <td><img src="${card.image}" alt="thumb" class="thumb" /></td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteCard(${index})">Delete</button>
+          </td>
+        `;
+        cardTableBody.appendChild(row);
+      });
+    }
+
+    function deleteCard(index) {
+      if (confirm("Are you sure you want to delete this card?")) {
+        cardList.splice(index, 1);
+        localStorage.setItem("cards", JSON.stringify(cardList));
+        renderTable();
+      }
+    }
+  </script>
+</body>
+
+</html>

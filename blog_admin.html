@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Olive Elements Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/admin.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="d-flex">
+
+        <!-- Sidebar -->
+        <aside class="sidebar p-4 d-flex flex-column">
+            <div class="d-flex align-items-center mb-4">
+                <img src="img/logo.png" class="me-2" width="40" alt="Logo">
+                <h5 class="m-0">Olive Elements</h5>
+            </div>
+            <nav class="nav flex-column mb-4">
+                <a class="nav-link" href="admin.html">Dashboard</a>
+                <a class="nav-link" href="events_admin.html">Campsites</a>
+                <a class="nav-link" href="admin_ads.html">Advertisement</a>
+                <a class="nav-link active" href="blog_admin.html">Blogs</a>
+            </nav>
+            <div class="pt-4">
+                <a href="index.html" class="d-block text-light">Log Out</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-grow-1 p-4">
+            <div class="container py-5">
+                <h2 class="text-center mb-4">Blog Admin Panel</h2>
+
+                <!-- Add New Blog Post Form -->
+                <div class="card p-4 shadow-sm mb-4">
+                    <h4>Add / Edit Blog Post</h4>
+                    <form id="blogForm">
+                        <input type="hidden" id="editIndex" value="">
+
+                        <!-- Image Section -->
+                        <div class="mb-3">
+                            <label class="form-label">Image (Choose URL or Upload)</label>
+                            <input type="text" id="image" class="form-control mb-2"
+                                placeholder="Enter image path (e.g., img/new/2.jpg)">
+                            <input type="file" id="imageUpload" class="form-control" accept="image/*">
+                            <small class="text-muted">If you upload an image, it will override the URL.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" id="title" class="form-control" placeholder="Enter blog title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea id="description" class="form-control" rows="3"
+                                placeholder="Enter blog description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Read More Link</label>
+                            <input type="text" id="link" class="form-control"
+                                placeholder="Enter blog detail page link or #">
+                        </div>
+                        <button type="submit" class="btn btn-success">Save Post</button>
+                    </form>
+                </div>
+
+                <!-- Blog List -->
+                <div class="card p-4 shadow-sm">
+                    <h4>All Blog Posts</h4>
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Link</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blogList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Blog  -->
+    <script>
+        let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+        let uploadedImage = ""; // store base64 of uploaded image
+
+        // Handle Image Upload
+        document.getElementById("imageUpload").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadedImage = e.target.result; // Base64 image
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Render blog list in admin
+        function renderBlogs() {
+            const blogList = document.getElementById("blogList");
+            blogList.innerHTML = "";
+            blogs.forEach((blog, index) => {
+                blogList.innerHTML += `
+          <tr>
+            <td><img src="${blog.image}" alt="" width="80"></td>
+            <td>${blog.title}</td>
+            <td>${blog.description.substring(0, 50)}...</td>
+            <td><a href="${blog.link}" target="_blank">View</a></td>
+            <td>
+              <button class="btn btn-sm btn-primary" onclick="editBlog(${index})">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteBlog(${index})">Delete</button>
+            </td>
+          </tr>
+        `;
+            });
+            localStorage.setItem("blogs", JSON.stringify(blogs));
+        }
+
+        // Save Blog
+        document.getElementById("blogForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            let image = document.getElementById("image").value;
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const link = document.getElementById("link").value;
+            const editIndex = document.getElementById("editIndex").value;
+
+            // If file was uploaded, override image URL
+            if (uploadedImage !== "") {
+                image = uploadedImage;
+                uploadedImage = ""; // reset after saving
+            }
+
+            if (editIndex === "") {
+                blogs.push({ image, title, description, link });
+            } else {
+                blogs[editIndex] = { image, title, description, link };
+                document.getElementById("editIndex").value = "";
+            }
+
+            this.reset();
+            renderBlogs();
+        });
+
+        // Edit Blog
+        function editBlog(index) {
+            const blog = blogs[index];
+            document.getElementById("image").value = blog.image.startsWith("data:image") ? "" : blog.image;
+            document.getElementById("title").value = blog.title;
+            document.getElementById("description").value = blog.description;
+            document.getElementById("link").value = blog.link;
+            document.getElementById("editIndex").value = index;
+        }
+
+        // Delete Blog
+        function deleteBlog(index) {
+            if (confirm("Are you sure you want to delete this blog post?")) {
+                blogs.splice(index, 1);
+                renderBlogs();
+            }
+        }
+
+        // Initial load
+        renderBlogs();
+    </script>
+</body>
+
+</html>
