@@ -1,40 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>Details - Olive Elements</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <link href="img/logo.png" rel="icon" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap"
+    rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="lib/animate/animate.min.css" rel="stylesheet" />
-  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/style.css" rel="stylesheet" />
+  <style>
+    .listing-price-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-book {
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .modal-content {
+      border-radius: 15px;
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 shadow-sm">
     <a href="index.html" class="navbar-brand p-0">
-      <img class="img-fluid me-3" src="img/logo.png" alt="Logo" />
+      <img class="img-fluid me-3" src="img/logo.png" alt="Olive Elements Logo" width="52" />
+      <span class="fw-bold" style="color:#21523d;">Olive Elements</span>
     </a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
-        <a href="explore.html" class="nav-item nav-link">Explore</a>
+        <a href="explore.html" class="nav-item nav-link active">Explore</a>
         <a href="service.html" class="nav-item nav-link">Services</a>
         <a href="blog.html" class="nav-item nav-link">Blog</a>
         <a href="about.html" class="nav-item nav-link">About</a>
       </div>
     </div>
   </nav>
+  <!-- Navbar End -->
 
+  <!-- Details -->
   <div class="container listing-section mt-5">
     <div class="row g-2 mb-4 listing-gallery" id="galleryRow"></div>
     <div class="row g-4">
@@ -63,7 +85,7 @@
       </div>
       <div class="col-lg-4">
         <div class="listing-price-box">
-          <h4 id="productPrice">₹0 <small class="text-muted">/ unit</small></h4>
+          <h4 id="productPrice">₹0 <small class="text-muted">/ person</small></h4>
           <p class="text-muted small">Minimum nights: 1</p>
           <div class="mb-3">
             <label class="form-label fw-bold">Location</label>
@@ -78,14 +100,65 @@
             <p class="form-control-plaintext">Available for booking</p>
           </div>
           <div class="d-grid gap-2 mt-3">
-            <a href="tel:+919951844668" class="btn btn-secondary">Call to Book</a>
-            <a href="#" target="_blank" id="whatsappBtn" class="btn btn-success">WhatsApp to Book</a>
+            <button class="btn btn-primary btn-book" data-bs-toggle="modal" data-bs-target="#bookingModal">
+              Book Now
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Booking Modal -->
+  <div class="modal fade" id="bookingModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Complete Your Booking</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="bookingForm">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="custName" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="custEmail" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-control" id="custPhone" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Check-in Date</label>
+              <input type="date" class="form-control" id="checkIn" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Check-out Date</label>
+              <input type="date" class="form-control" id="checkOut" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Guests</label>
+              <input type="number" class="form-control" id="guests" value="1" min="1" required />
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-info w-100 mb-2" id="generatePrice">
+                Generate Price
+              </button>
+              <p class="fw-bold text-center mt-2" id="totalPrice"></p>
+              <button type="submit" class="btn btn-success w-100" id="proceedBtn" disabled>
+                Proceed to Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <div class="container-fluid footer bg-dark text-light mt-5 pt-5">
     <div class="container py-5">
       <div class="row g-5">
@@ -98,63 +171,111 @@
         </div>
         <div class="col-lg-4 col-md-6">
           <p><i class="fa fa-phone-alt me-3"></i>+91 99518 44668</p>
-          <p><i class="fa fa-envelope me-3"></i>info@oliveelements.com</p>
+          <p><i class="fa fa-envelope me-3"></i>contactoliveelements@gmail.com</p>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Back to top -->
   <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Razorpay -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams(window.location.search);
       const id = parseInt(params.get("id"));
       const cards = JSON.parse(localStorage.getItem("cards")) || [];
+
       if (!cards[id]) {
         document.querySelector(".listing-section").innerHTML = "<h3>Product not found.</h3>";
         return;
       }
+
       const card = cards[id];
+
+      // Fill details
       document.getElementById("productTitle").textContent = card.title;
       document.getElementById("productLocation").textContent = card.location;
       document.getElementById("productReview").textContent = card.review;
       document.getElementById("productDescription").innerHTML = card.description || "-";
-      document.getElementById("productPrice").innerHTML = `${card.price} <small class="text-muted">/ unit</small>`;
+      document.getElementById("productPrice").innerHTML = `₹${card.price} <small class="text-muted">/ person</small>`;
       document.getElementById("bookingLocation").textContent = card.location;
       document.getElementById("bookingTitle").textContent = card.title;
-      document.getElementById("whatsappBtn").href = `https://wa.me/919951844668?text=Hi%2C%20I%20am%20interested%20in%20booking%20${encodeURIComponent(card.title)}`;
 
-      const amenitiesHTML = (card.amenities || []).map(item => `<div class="col-md-4">${item}</div>`).join("");
-      document.getElementById("amenitiesList").innerHTML = amenitiesHTML;
+      // Amenities
+      document.getElementById("amenitiesList").innerHTML =
+        (card.amenities || []).map(item => `<div class="col-md-4">✅ ${item}</div>`).join("");
 
-      const foodHTML = (card.food || []).map(item => `<li>✅ ${item}</li>`).join("");
-      document.getElementById("foodList").innerHTML = foodHTML;
+      // Food
+      document.getElementById("foodList").innerHTML =
+        (card.food || []).map(item => `<li>🍴 ${item}</li>`).join("");
 
-      const activityHTML = (card.activities || []).map(item => `<div class="col-md-4">${item}</div>`).join("");
-      document.getElementById("activityList").innerHTML = activityHTML;
+      // Activities
+      document.getElementById("activityList").innerHTML =
+        (card.activities || []).map(item => `<div class="col-md-4">🎯 ${item}</div>`).join("");
 
+      // Gallery
       const gallery = Array.isArray(card.gallery) ? card.gallery.slice(0, 4) : [];
-      const galleryHTML = gallery.map((img, index) => `
+      document.getElementById("galleryRow").innerHTML = gallery.map((img, index) => `
         <div class="col-md-3 position-relative">
           <a href="${img}" data-lightbox="gallery">
-            <img src="${img}" class="img-fluid" alt="Gallery ${index + 1}">
+            <img src="${img}" class="img-fluid rounded" alt="Gallery ${index + 1}">
           </a>
-          ${index === 3 ? `<a href="blog.html" class="btn btn-warning btn-sm btn-viewmore">View More</a>` : ""}
+          ${index === 3 ? `<a href="gallery.html" class="btn btn-warning btn-sm btn-viewmore">View More</a>` : ""}
         </div>
       `).join("");
-      document.getElementById("galleryRow").innerHTML = galleryHTML;
+
+      // Base Price
+      const basePrice = parseInt(card.price.replace(/[^0-9]/g, "")) || 0;
+
+      // Generate Price
+      document.getElementById("generatePrice").addEventListener("click", function () {
+        const guests = parseInt(document.getElementById("guests").value) || 1;
+        const total = basePrice * guests;
+
+        document.getElementById("totalPrice").textContent = `Total Price: ₹${total}`;
+        document.getElementById("proceedBtn").disabled = false;
+        document.getElementById("proceedBtn").setAttribute("data-total", total);
+      });
+
+      // Proceed to Payment (Razorpay)
+      document.getElementById("bookingForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const total = document.getElementById("proceedBtn").getAttribute("data-total") || basePrice;
+
+        const options = {
+          key: "rzp_live_L3HA1HGn0RDeRL", // ✅ Your Razorpay Live Key
+          amount: total * 100,            // in paise
+          currency: "INR",
+          name: "Olive Elements",
+          description: card.title || "Booking Payment",
+          image: "img/logo.png",
+          handler: function (response) {
+            alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+            // 👉 optionally send this response to your server for verification
+          },
+          prefill: {
+            name: document.getElementById("custName").value,
+            email: document.getElementById("custEmail").value,
+            contact: document.getElementById("custPhone").value
+          },
+          theme: {
+            color: "#21523d"
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+      });
     });
   </script>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/waypoints/waypoints.min.js"></script>
-  <script src="lib/counterup/counterup.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>
