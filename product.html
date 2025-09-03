@@ -6,8 +6,7 @@
   <title>Details - Olive Elements</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <link href="img/logo.png" rel="icon" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap"
     rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
@@ -65,6 +64,7 @@
         <h2 id="productTitle">Title</h2>
         <p class="text-success" id="productReview">Review</p>
         <p class="text-muted" id="productDescription">Description</p>
+
         <div class="listing-box border rounded p-3 mb-3">
           <h5>Amenities</h5>
           <div class="row" id="amenitiesList"></div>
@@ -83,6 +83,8 @@
           <p>Accessibility: Road</p>
         </div>
       </div>
+
+      <!-- Right side booking -->
       <div class="col-lg-4">
         <div class="listing-price-box">
           <h4 id="productPrice">₹0 <small class="text-muted">/ person</small></h4>
@@ -111,48 +113,86 @@
 
   <!-- Booking Modal -->
   <div class="modal fade" id="bookingModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Complete Your Booking</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <form id="bookingForm">
-            <div class="mb-3">
-              <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="custName" required />
+          <div class="row g-3">
+            <!-- LEFT: Booking Inputs + Summary -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" id="checkIn" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" id="checkOut" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Guests</label>
+                <input type="number" class="form-control" id="guests" value="1" min="1" required />
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-info w-100 mb-2" id="generatePrice">
+                  Generate Price
+                </button>
+              </div>
+
+              <!-- Booking Summary -->
+              <div class="p-3 border rounded bg-light mt-3">
+                <h6 class="bg-primary text-white text-center p-2 rounded">Booking Summary</h6>
+                <p class="small text-muted text-center" id="summaryDates"></p>
+                <table class="table table-bordered">
+                  <thead class="table-warning">
+                    <tr>
+                      <th>Category</th>
+                      <th>Quantity</th>
+                      <th>Rate (₹)</th>
+                      <th>Total (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="summaryTable"></tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="3" class="text-end">Total Cost</th>
+                      <th id="summaryTotal" class="text-success">₹0</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" id="custEmail" required />
+
+            <!-- RIGHT: Guest Info -->
+            <div class="col-md-6">
+              <div class="p-4 rounded" style="background:#05114d; color:white;">
+                <form id="bookingForm">
+                  <div class="mb-3">
+                    <label>Your Name</label>
+                    <input type="text" class="form-control" id="custName" required />
+                  </div>
+                  <div class="mb-3">
+                    <label>Your Email</label>
+                    <input type="email" class="form-control" id="custEmail" required />
+                  </div>
+                  <div class="mb-3">
+                    <label>Your Phone</label>
+                    <input type="tel" class="form-control" id="custPhone" required />
+                  </div>
+                  <div class="mb-3">
+                    <label>Total Amount</label>
+                    <input type="text" class="form-control" id="custAmount" readonly />
+                  </div>
+                  <button type="submit" class="btn btn-warning w-100 fw-bold" id="proceedBtn" disabled>
+                    Proceed to Pay
+                  </button>
+                </form>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Phone</label>
-              <input type="tel" class="form-control" id="custPhone" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Check-in Date</label>
-              <input type="date" class="form-control" id="checkIn" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Check-out Date</label>
-              <input type="date" class="form-control" id="checkOut" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Guests</label>
-              <input type="number" class="form-control" id="guests" value="1" min="1" required />
-            </div>
-            <div class="d-grid gap-2">
-              <button type="button" class="btn btn-info w-100 mb-2" id="generatePrice">
-                Generate Price
-              </button>
-              <p class="fw-bold text-center mt-2" id="totalPrice"></p>
-              <button type="submit" class="btn btn-success w-100" id="proceedBtn" disabled>
-                Proceed to Payment
-              </button>
-            </div>
-          </form>
+
+          </div>
         </div>
       </div>
     </div>
@@ -183,8 +223,6 @@
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Razorpay -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
@@ -199,8 +237,6 @@
       }
 
       const card = cards[id];
-
-      // Fill details
       document.getElementById("productTitle").textContent = card.title;
       document.getElementById("productLocation").textContent = card.location;
       document.getElementById("productReview").textContent = card.review;
@@ -209,19 +245,13 @@
       document.getElementById("bookingLocation").textContent = card.location;
       document.getElementById("bookingTitle").textContent = card.title;
 
-      // Amenities
       document.getElementById("amenitiesList").innerHTML =
         (card.amenities || []).map(item => `<div class="col-md-4">✅ ${item}</div>`).join("");
-
-      // Food
       document.getElementById("foodList").innerHTML =
         (card.food || []).map(item => `<li>🍴 ${item}</li>`).join("");
-
-      // Activities
       document.getElementById("activityList").innerHTML =
         (card.activities || []).map(item => `<div class="col-md-4">🎯 ${item}</div>`).join("");
 
-      // Gallery
       const gallery = Array.isArray(card.gallery) ? card.gallery.slice(0, 4) : [];
       document.getElementById("galleryRow").innerHTML = gallery.map((img, index) => `
         <div class="col-md-3 position-relative">
@@ -232,46 +262,111 @@
         </div>
       `).join("");
 
-      // Base Price
       const basePrice = parseInt(card.price.replace(/[^0-9]/g, "")) || 0;
 
       // Generate Price
       document.getElementById("generatePrice").addEventListener("click", function () {
         const guests = parseInt(document.getElementById("guests").value) || 1;
-        const total = basePrice * guests;
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        const nights = checkIn && checkOut
+          ? Math.max(1, Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)))
+          : 1;
 
-        document.getElementById("totalPrice").textContent = `Total Price: ₹${total}`;
+        const total = basePrice * guests * nights;
+        document.getElementById("summaryDates").textContent =
+          checkIn && checkOut ? `From ${checkIn} to ${checkOut} (${nights} nights)` : "";
+        document.getElementById("summaryTable").innerHTML = `
+          <tr>
+            <td>Accommodation</td>
+            <td>${guests} x ${nights} nights</td>
+            <td>₹${basePrice}</td>
+            <td>₹${total}</td>
+          </tr>
+        `;
+        document.getElementById("summaryTotal").textContent = `₹${total}`;
+        document.getElementById("custAmount").value = total;
         document.getElementById("proceedBtn").disabled = false;
         document.getElementById("proceedBtn").setAttribute("data-total", total);
       });
 
-      // Proceed to Payment (Razorpay)
+      // Save Payment to LocalStorage
+      function savePayment(payment) {
+        let payments = JSON.parse(localStorage.getItem("payments")) || [];
+        payments.push(payment);
+        localStorage.setItem("payments", JSON.stringify(payments));
+      }
+
+      // Generate Booking ID
+      function generateBookingId() {
+        return 'BKG' + Date.now().toString(36) + Math.floor(Math.random() * 1000);
+      }
+
+      // Proceed to Payment
       document.getElementById("bookingForm").addEventListener("submit", function (e) {
         e.preventDefault();
-
         const total = document.getElementById("proceedBtn").getAttribute("data-total") || basePrice;
+        const customerName = document.getElementById("custName").value;
+        const customerEmail = document.getElementById("custEmail").value;
+        const customerPhone = document.getElementById("custPhone").value;
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        const guests = document.getElementById("guests").value;
+
+        const bookingId = generateBookingId();
 
         const options = {
-          key: "rzp_live_L3HA1HGn0RDeRL", // ✅ Your Razorpay Live Key
-          amount: total * 100,            // in paise
+          key: "rzp_live_L3HA1HGn0RDeRL",
+          amount: total * 100,
           currency: "INR",
           name: "Olive Elements",
           description: card.title || "Booking Payment",
           image: "img/logo.png",
           handler: function (response) {
             alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
-            // 👉 optionally send this response to your server for verification
+            savePayment({
+              bookingId: bookingId,
+              booking: card.title,
+              type: "Online",
+              status: "Done",
+              date: new Date().toLocaleDateString(),
+              amount: total,
+              paymentId: response.razorpay_payment_id,
+              name: customerName,
+              email: customerEmail,
+              phone: customerPhone,
+              checkIn: checkIn,
+              checkOut: checkOut,
+              guests: guests
+            });
           },
           prefill: {
-            name: document.getElementById("custName").value,
-            email: document.getElementById("custEmail").value,
-            contact: document.getElementById("custPhone").value
+            name: customerName,
+            email: customerEmail,
+            contact: customerPhone
           },
-          theme: {
-            color: "#21523d"
+          theme: { color: "#21523d" },
+          modal: {
+            ondismiss: function () {
+              savePayment({
+                bookingId: bookingId,
+                booking: card.title,
+                type: "Online",
+                status: "Failed",
+                date: new Date().toLocaleDateString(),
+                amount: total,
+                paymentId: null,
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                guests: guests
+              });
+              alert("❌ Payment Failed or Cancelled!");
+            }
           }
         };
-
         const rzp = new Razorpay(options);
         rzp.open();
       });
