@@ -1,26 +1,6 @@
-/* General Reset & Fonts */
-body {
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
-  background: #f8f9fa;
-  line-height: 1.6;
-}
 
-/* Navbar */
-.navbar {
-  background: #fff !important;
-  border-bottom: 1px solid #eee;
-}
-.navbar .nav-link {
-  font-weight: 500;
-  margin: 0 8px;
-  color: #21523d !important;
-  transition: color 0.3s;
-}
-.navbar .nav-link:hover,
-.navbar .nav-link.active {
-  color: #0d6efd !important;
-}
+
+
 
 /* Page Header */
 .header-bg {
@@ -120,51 +100,9 @@ body {
   transition: background 0.3s;
 }
 .service-info .btn:hover {
-  background: #0d6efd;
+  /* background: #0d6efd; */
   color: #fff;
 }
 
-/* Footer */
-.footer {
-  background: #21523d;
-  color: #fff;
-}
-.footer p,
-.footer small {
-  color: #eee;
-}
-.footer .btn-social {
-  background: rgba(255, 255, 255, 0.1);
-  margin-right: 8px;
-  color: #fff;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s;
-}
-.footer .btn-social:hover {
-  background: #0d6efd;
-}
 
-/* Back to Top */
-.back-to-top {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #21523d;
-  color: #fff;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  transition: background 0.3s;
-}
-.back-to-top:hover {
-  background: #0d6efd;
-}
+

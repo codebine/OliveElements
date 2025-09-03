@@ -76,7 +76,7 @@
       margin-top: 48px;
     }
     .footer .logo {
-      width: 120px;
+      /* width: 120px; */
       margin-bottom: 14px;
       filter: drop-shadow(2px 4px 12px rgba(39,79,61,.12));
     }
