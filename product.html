@@ -47,7 +47,6 @@
     <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
         <a href="explore.html" class="nav-item nav-link active">Explore</a>
-        
         <a href="blog.html" class="nav-item nav-link">Blog</a>
         <a href="about.html" class="nav-item nav-link">About</a>
       </div>
@@ -181,6 +180,11 @@
                     <label>Your Phone</label>
                     <input type="tel" class="form-control" id="custPhone" required />
                   </div>
+                  <!-- NEW: Product Booked -->
+                  <div class="mb-3">
+                    <label>Product Booked</label>
+                    <input type="text" class="form-control" id="custProduct" readonly />
+                  </div>
                   <div class="mb-3">
                     <label>Total Amount</label>
                     <input type="text" class="form-control" id="custAmount" readonly />
@@ -244,6 +248,7 @@
       document.getElementById("productPrice").innerHTML = `₹${card.price} <small class="text-muted">/ person</small>`;
       document.getElementById("bookingLocation").textContent = card.location;
       document.getElementById("bookingTitle").textContent = card.title;
+      document.getElementById("custProduct").value = card.title; // ✅ Show booked product in form
 
       document.getElementById("amenitiesList").innerHTML =
         (card.amenities || []).map(item => `<div class="col-md-4">✅ ${item}</div>`).join("");
@@ -312,6 +317,7 @@
         const checkIn = document.getElementById("checkIn").value;
         const checkOut = document.getElementById("checkOut").value;
         const guests = document.getElementById("guests").value;
+        const productBooked = document.getElementById("custProduct").value;
 
         const bookingId = generateBookingId();
 
@@ -320,13 +326,13 @@
           amount: total * 100,
           currency: "INR",
           name: "Olive Elements",
-          description: card.title || "Booking Payment",
+          description: productBooked || "Booking Payment",
           image: "img/logo.png",
           handler: function (response) {
             alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
             savePayment({
               bookingId: bookingId,
-              booking: card.title,
+              booking: productBooked, // ✅ Save product
               type: "Online",
               status: "Done",
               date: new Date().toLocaleDateString(),
@@ -350,7 +356,7 @@
             ondismiss: function () {
               savePayment({
                 bookingId: bookingId,
-                booking: card.title,
+                booking: productBooked,
                 type: "Online",
                 status: "Failed",
                 date: new Date().toLocaleDateString(),

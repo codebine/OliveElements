@@ -132,6 +132,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
+          <p><strong>Product:</strong> <span id="modalProduct"></span></p>
           <p><strong>Name:</strong> <span id="modalName"></span></p>
           <p><strong>Email:</strong> <span id="modalEmail"></span></p>
           <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
@@ -199,6 +200,7 @@
 
     // Show booking details modal
     function viewBooking(data) {
+      document.getElementById("modalProduct").innerText = data.booking || "-";
       document.getElementById("modalName").innerText = data.name || "-";
       document.getElementById("modalEmail").innerText = data.email || "-";
       document.getElementById("modalPhone").innerText = data.phone || "-";
