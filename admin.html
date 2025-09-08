@@ -154,7 +154,6 @@
     const validUser = "admin";
     const validPass = "olive123";
 
-    // Login check
     function checkLogin() {
       const user = document.getElementById("username").value;
       const pass = document.getElementById("password").value;
@@ -167,7 +166,6 @@
       }
     }
 
-    // Logout function
     function logout() {
       document.getElementById("loginOverlay").style.display = "flex";
       document.body.classList.add("locked");
@@ -176,7 +174,7 @@
       document.getElementById("errorMsg").innerText = "";
     }
 
-    // ✅ Load payments with Delete + View
+    // ✅ Load payments from localStorage
     function loadPayments() {
       const tbody = document.getElementById("transactionsBody");
       tbody.innerHTML = "";
@@ -198,7 +196,6 @@
       });
     }
 
-    // Show booking details modal
     function viewBooking(data) {
       document.getElementById("modalProduct").innerText = data.booking || "-";
       document.getElementById("modalName").innerText = data.name || "-";
@@ -207,14 +204,13 @@
       document.getElementById("modalCheckIn").innerText = data.checkIn || "-";
       document.getElementById("modalCheckOut").innerText = data.checkOut || "-";
       document.getElementById("modalGuests").innerText = data.guests || "-";
-      document.getElementById("modalAmount").innerText = "₹" + data.amount;
+      document.getElementById("modalAmount").innerText = "₹" + (data.amount || "0");
       document.getElementById("modalStatus").innerText = data.status;
 
       const modal = new bootstrap.Modal(document.getElementById("bookingModal"));
       modal.show();
     }
 
-    // ✅ Delete payment from localStorage
     function deletePayment(index) {
       if (confirm("Are you sure you want to delete this booking?")) {
         let payments = JSON.parse(localStorage.getItem("payments")) || [];
@@ -224,14 +220,42 @@
       }
     }
 
-    // Dummy invoice generator
-    function generateInvoice() {
-      alert("Invoice generated successfully! (You can integrate PDF export here)");
+    // ✅ Generate Invoice + send to backend
+    async function generateInvoice() {
+      const email = document.getElementById("modalEmail").innerText;
+      const booking = {
+        booking: document.getElementById("modalProduct").innerText,
+        name: document.getElementById("modalName").innerText,
+        phone: document.getElementById("modalPhone").innerText,
+        checkIn: document.getElementById("modalCheckIn").innerText,
+        checkOut: document.getElementById("modalCheckOut").innerText,
+        guests: document.getElementById("modalGuests").innerText,
+        amount: document.getElementById("modalAmount").innerText.replace("₹", "").trim(),
+        status: document.getElementById("modalStatus").innerText,
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/send-invoice", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, booking }),
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          alert("✅ Invoice sent successfully!");
+        } else {
+          console.error("Backend error:", result);
+          alert("❌ Failed to send invoice.");
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        alert("⚠️ Error sending invoice.");
+      }
     }
 
-    // On page load
     window.onload = function () {
-      logout(); // always lock
+      logout();
       loadPayments();
     }
   </script>
